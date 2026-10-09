@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrasi Kartu Tri & IM3</title>
+  <!-- SDK Resmi Telegram WebApp -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 15px; background: var(--tg-theme-bg-color, #fff); color: var(--tg-theme-text-color, #000); }
+    .form-group { margin-bottom: 12px; }
+    label { display: block; font-size: 14px; margin-bottom: 4px; }
+    input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+    button { width: 100%; padding: 12px; background: #24292e; color: #fff; border: none; border-radius: 6px; font-weight: bold; margin-top: 10px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>Registrasi Kartu Tri & IM3</h2>
+  
+  <div class="form-group">
+    <label>Provider</label>
+    <select id="provider">
+      <option value="Tri">Tri (3)</option>
+      <option value="IM3">IM3 (Indosat)</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Nomor Perdana</label>
+    <input type="tel" id="nomor_hp" placeholder="Contoh: 0896xxx / 0857xxx" required>
+  </div>
+
+  <div class="form-group">
+    <label>NIK (16 Digit)</label>
+    <input type="number" id="nik" placeholder="Masukkan NIK KTP" required>
+  </div>
+
+  <div class="form-group">
+    <label>Nomor KK (16 Digit)</label>
+    <input type="number" id="kk" placeholder="Masukkan Nomor KK" required>
+  </div>
+
+  <button onclick="kirimData()">KIRIM REGISTRASI</button>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // Memperluas tampilan mini app
+
+    function kirimData() {
+      const data = {
+        provider: document.getElementById('provider').value,
+        nomor_hp: document.getElementById('nomor_hp').value,
+        nik: document.getElementById('nik').value,
+        kk: document.getElementById('kk').value
+      };
+
+      if (!data.nomor_hp || !data.nik || !data.kk) {
+        alert("Semua kolom wajib diisi!");
+        return;
+      }
+
+      // Mengirimkan data formulir kembali ke Telegram Bot
+      tg.sendData(JSON.stringify(data));
+      tg.close();
+    }
+  </script>
+</body>
+</html>
+            
